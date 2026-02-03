@@ -1,0 +1,11 @@
+{% extends "appCore/layout.html" %}
+
+{% block title %}{{ artwork.title }}{% endblock %}
+
+{% block content %}
+<h2>{{ artwork.title }}</h2>
+<img src="{{ artwork.image.url }}" alt="{{ artwork.title }}">
+<p>{{ artwork.description }}</p>
+<p>Artist: <a href="{% url 'artist_profile' artwork.artist.username %}">{{ artwork.artist.username }}</a></p>
+<p>Created: {{ artwork.created_at }}</p>
+{% endblock %}

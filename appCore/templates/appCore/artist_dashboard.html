@@ -1,0 +1,107 @@
+{% extends "appCore/layout.html" %}
+
+{% block title %}Artist Dashboard{% endblock %}
+
+{% block content %}
+<section class="dashboard-shell">
+    <aside class="dashboard-sidebar">
+        <div class="sidebar-brand">
+            <span class="brand-dot"></span>
+            <span class="brand-text">Artelio</span>
+        </div>
+        <div class="sidebar-user">
+            <div class="user-avatar">EV</div>
+            <div>
+                <div class="user-name">Elena Vance</div>
+                <div class="user-email">elenavance@artelio.ai</div>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a class="sidebar-link" href="{% url 'portfolio' %}">
+                <span class="sidebar-icon">⬛</span>
+                My Portfolio
+            </a>
+            <a class="sidebar-link active" href="{% url 'artist_dashboard' %}">
+                <span class="sidebar-icon">📊</span>
+                Analytics
+            </a>
+            <a class="sidebar-link" href="{% url 'ai_collaboration' %}">
+                <span class="sidebar-icon">🤝</span>
+                Collaborations
+            </a>
+            <a class="sidebar-link" href="{% url 'contact' %}">
+                <span class="sidebar-icon">⚙️</span>
+                Settings
+            </a>
+        </nav>
+        <a class="sidebar-link logout" href="{% url 'logout' %}">
+            <span class="sidebar-icon">↩</span>
+            Log Out
+        </a>
+    </aside>
+
+    <div class="dashboard-main">
+        <header class="dashboard-top">
+            <div>
+                <h2>Dashboard</h2>
+                <p>Welcome back, Elena! Here’s what’s new.</p>
+            </div>
+            <a class="btn btn-primary upload-btn" href="{% url 'upload_artwork' %}">Upload New Art</a>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-panel">
+                <h3>Portfolio Analytics</h3>
+                <div class="analytics-row">
+                    <div class="stat-card">
+                        <span class="stat-label">Total Views</span>
+                        <span class="stat-value">12,845</span>
+                        <span class="stat-delta positive">+12.5%</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Total Likes</span>
+                        <span class="stat-value">3,102</span>
+                        <span class="stat-delta positive">+8.2%</span>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-title">Views and Likes - Last 30 Days</div>
+                            <div class="chart-total">15,947 Total</div>
+                        </div>
+                        <div class="chart-growth">Last 30 Days <span class="positive">+15%</span></div>
+                    </div>
+                    <div class="chart-curve"></div>
+                    <div class="chart-labels">
+                        <span>Week 1</span>
+                        <span>Week 2</span>
+                        <span>Week 3</span>
+                        <span>Week 4</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-panel side-panel">
+                <h3>AI Collaboration Suggestions</h3>
+                <div class="collab-card">
+                    <div class="collab-avatar">MR</div>
+                    <div>
+                        <div class="collab-name">Marcus Reid</div>
+                        <div class="collab-role">Digital Painter</div>
+                    </div>
+                    <button class="btn btn-secondary">View Profile</button>
+                </div>
+                <div class="collab-card">
+                    <div class="collab-avatar">CC</div>
+                    <div>
+                        <div class="collab-name">Clara Chen</div>
+                        <div class="collab-role">3D Sculptor</div>
+                    </div>
+                    <button class="btn btn-secondary">View Profile</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

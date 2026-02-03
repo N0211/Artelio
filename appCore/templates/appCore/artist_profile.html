@@ -1,0 +1,23 @@
+{% extends "appCore/layout.html" %}
+
+{% block title %}{{ profile.user.username }}'s Profile{% endblock %}
+
+{% block content %}
+<h2>{{ profile.user.username }}'s Profile</h2>
+{% if profile.profile_image %}
+<img src="{{ profile.profile_image.url }}" alt="Profile Image">
+{% endif %}
+<p>Bio: {{ profile.bio }}</p>
+{% if profile.website %}
+<p>Website: <a href="{{ profile.website }}">{{ profile.website }}</a></p>
+{% endif %}
+<h3>Artworks</h3>
+<div class="artwork-grid">
+    {% for artwork in artworks %}
+    <div class="artwork-item">
+        <img src="{{ artwork.image.url }}" alt="{{ artwork.title }}">
+        <h4><a href="{% url 'artwork_detail' artwork.pk %}">{{ artwork.title }}</a></h4>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

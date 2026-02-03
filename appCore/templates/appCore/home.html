@@ -1,0 +1,92 @@
+{% extends "appCore/layout.html" %}
+{% block title %}
+Home
+{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-card">
+        <h1>Find Your Perfect Creative Match</h1>
+        <p>Our AI helps you discover talented artists perfectly suited for your project.</p>
+        <form class="hero-search" method="post" action="{% url 'ai_candidate_search' %}">
+            {% csrf_token %}
+            <span class="search-icon">🔍</span>
+            <input type="text" name="brief" placeholder="Describe your ideal artist..." required>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-header">
+        <h2>Featured Artworks</h2>
+    </div>
+    <div class="art-grid">
+        {% if featured_artworks %}
+            {% for artwork in featured_artworks %}
+            <div class="art-card art-image" style="background-image: url('{{ artwork.image.url }}');">
+                <span>{{ artwork.title }}</span>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="art-card art-one"><span>Celestial Dreamscape</span></div>
+            <div class="art-card art-two"><span>Cybernetic City</span></div>
+            <div class="art-card art-three"><span>Forest Spirit</span></div>
+            <div class="art-card art-four"><span>Ocean's Fury</span></div>
+            <div class="art-card art-five"><span>Vibrant Market</span></div>
+            <div class="art-card art-six"><span>Steampunk Automaton</span></div>
+            <div class="art-card art-seven"><span>Galactic Explorer</span></div>
+            <div class="art-card art-eight"><span>Desert Wanderer</span></div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-header">
+        <h2>Featured Artists</h2>
+    </div>
+    <div class="artist-grid">
+        <div class="artist-card">
+            <div class="artist-avatar avatar-one">A</div>
+            <div class="artist-name">Artist A</div>
+            <div class="artist-role">Aint nobody got the time for that</div>
+        </div>
+        <div class="artist-card">
+            <div class="artist-avatar avatar-two">B</div>
+            <div class="artist-name">Artist B</div>
+            <div class="artist-role">3D Modeler</div>
+        </div>
+        <div class="artist-card">
+            <div class="artist-avatar avatar-three">C</div>
+            <div class="artist-name">Artist C</div>
+            <div class="artist-role">Illustrator</div>
+        </div>
+        <div class="artist-card">
+            <div class="artist-avatar avatar-four">D</div>
+            <div class="artist-name">Artist D</div>
+            <div class="artist-role">Animator</div>
+        </div>
+        <div class="artist-card">
+            <div class="artist-avatar avatar-five">E</div>
+            <div class="artist-name">Artist E</div>
+            <div class="artist-role">UI/UX Designer</div>
+        </div>
+        <div class="artist-card">
+            <div class="artist-avatar avatar-six">F</div>
+            <div class="artist-name">Artist F</div>
+            <div class="artist-role">Pixel Artist</div>
+        </div>
+    </div>
+</section>
+
+<footer class="site-footer">
+    <div class="footer-left">
+        <div class="brand-text">Artelio Inc.</div>
+        <div class="footer-subtext">© 2026. All Rights Reserved.</div>
+    </div>
+    <div class="footer-links">
+        <a href="{% url 'about' %}">Terms of Service</a>
+        <a href="{% url 'about' %}">Privacy Policy</a>
+        <a href="{% url 'contact' %}">Contact</a>
+    </div>
+</footer>
+{% endblock %}

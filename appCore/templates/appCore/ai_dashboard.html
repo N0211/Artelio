@@ -1,0 +1,25 @@
+{% extends "appCore/layout.html" %}
+
+{% block title %}AI Tools{% endblock %}
+
+{% block content %}
+<section class="ai-page">
+    <h2>AI Tools</h2>
+    <p class="ai-intro">Jump into the core AI features of your prototype.</p>
+
+    <div class="ai-tool-grid">
+        <a class="ai-tool-card" href="{% url 'ai_collaboration' %}">
+            <h3>AI Artist Collaboration</h3>
+            <p>Find the best collaborator and generate a joint concept.</p>
+        </a>
+        <a class="ai-tool-card" href="{% url 'ai_compare' %}">
+            <h3>AI Artist Comparison</h3>
+            <p>Side‑by‑side comparison with similarities and differences.</p>
+        </a>
+        <a class="ai-tool-card" href="{% url 'ai_candidate_search' %}">
+            <h3>AI Candidate Search</h3>
+            <p>Rank top artists for a project brief.</p>
+        </a>
+    </div>
+</section>
+{% endblock %}

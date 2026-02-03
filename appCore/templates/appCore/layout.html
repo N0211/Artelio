@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Artelio{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'appCore/site.css' %}">
+</head>
+<body>
+    <nav class="site-nav">
+        <div class="nav-container">
+            <a class="brand" href="{% url 'home' %}">
+                <span class="brand-dot"></span>
+                <span class="brand-text">Artelio</span>
+            </a>
+            <div class="nav-links">
+                <a href="{% url 'portfolio' %}">Explore</a>
+                <a href="{% url 'ai_dashboard' %}">Artists</a>
+                <a href="{% url 'about' %}">About</a>
+            </div>
+            <div class="nav-actions">
+                {% if user.is_authenticated %}
+                {% if user.role == "artist" %}
+                <a class="btn btn-secondary" href="{% url 'artist_dashboard' %}">Dashboard</a>
+                {% endif %}
+                <a class="btn btn-secondary" href="{% url 'ai_dashboard' %}">AI Tools</a>
+                <a class="btn btn-outline" href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                <a class="btn btn-secondary" href="{% url 'login' %}">Login</a>
+                <a class="btn btn-primary" href="{% url 'register' %}">Sign Up</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <main class="page">
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+    <script src="{% static 'appCore/scripts.js' %}"></script>
+</body>
+</html>

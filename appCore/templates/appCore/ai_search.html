@@ -1,0 +1,40 @@
+{% extends "appCore/layout.html" %}
+
+{% block title %}AI Candidate Search{% endblock %}
+
+{% block content %}
+<section class="ai-page">
+    <h2>AI Candidate Search</h2>
+    <p class="ai-intro">Describe your project and AI will rank the best artist candidates.</p>
+
+    <form method="post" class="ai-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="brief">Project brief</label>
+            <textarea id="brief" name="brief" rows="4" required>{{ brief }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Find candidates</button>
+    </form>
+
+    {% if error %}
+    <div class="ai-error">Error: {{ error }}</div>
+    {% endif %}
+
+    {% if result %}
+    <div class="ai-result">
+        <h3>Top candidates</h3>
+        <div class="ai-candidate-list">
+            {% for item in result.results %}
+            <div class="ai-candidate-card">
+                <div class="ai-candidate-header">
+                    <strong>{{ item.username }}</strong>
+                    <span class="ai-score">{{ item.score }}</span>
+                </div>
+                <p>{{ item.reason }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
