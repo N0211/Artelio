@@ -25,6 +25,9 @@ Home
             {% for artwork in featured_artworks %}
             <div class="art-card art-image" style="background-image: url('{{ artwork.image.url }}');">
                 <span>{{ artwork.title }}</span>
+                <a class="art-byline" href="{% url 'artist_profile' artwork.artist.username %}">
+                    by: {{ artwork.artist.username }}
+                </a>
             </div>
             {% endfor %}
         {% else %}
@@ -48,7 +51,7 @@ Home
         <div class="artist-card">
             <div class="artist-avatar avatar-one">A</div>
             <div class="artist-name">Artist A</div>
-            <div class="artist-role">Aint nobody got the time for that</div>
+            <div class="artist-role">Anime Artist</div>
         </div>
         <div class="artist-card">
             <div class="artist-avatar avatar-two">B</div>

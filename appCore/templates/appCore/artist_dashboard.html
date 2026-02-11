@@ -3,105 +3,124 @@
 {% block title %}Artist Dashboard{% endblock %}
 
 {% block content %}
-<section class="dashboard-shell">
-    <aside class="dashboard-sidebar">
-        <div class="sidebar-brand">
-            <span class="brand-dot"></span>
-            <span class="brand-text">Artelio</span>
+<section class="artist-profile">
+    <div class="artist-profile-hero">
+        <div class="artist-identity">
+            <div class="profile-avatar">
+                {% if profile and profile.profile_image %}
+                <img class="profile-avatar-img" src="{{ profile.profile_image.url }}" alt="{{ request.user.username }}">
+                {% else %}
+                <span>{{ request.user.username|slice:":1"|upper }}</span>
+                {% endif %}
+            </div>
+            <div class="artist-meta">
+                <h2>{{ request.user.get_full_name|default:request.user.username|capfirst }}</h2>
+                <p class="artist-bio">
+                    {% if profile and profile.bio %}
+                        {{ profile.bio }}
+                    {% else %}
+                        A passionate visual artist exploring the intersection of nature and technology through vibrant digital paintings.
+                    {% endif %}
+                </p>
+                <p class="artist-bio">
+                    Contact: {{ request.user.email|default:"No email set" }}
+                    {% if profile and profile.phone %}
+                        | {{ profile.phone }}
+                    {% endif %}
+                </p>
+                <div class="artist-actions">
+                    {% if request.user.email %}
+                    <a class="btn btn-secondary" href="mailto:{{ request.user.email }}">Contact</a>
+                    {% else %}
+                    <button class="btn btn-secondary" type="button">Contact</button>
+                    {% endif %}
+                    <a class="btn btn-outline" href="{% url 'edit_artist_profile' %}">Edit Profile</a>
+                    <a class="btn btn-primary upload-btn" href="{% url 'upload_artwork' %}">Upload Work</a>
+                </div>
+                <div class="artist-tags">
+                    {% for tag in mood_tags %}
+                    <span class="tag">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-        <div class="sidebar-user">
-            <div class="user-avatar">EV</div>
-            <div>
-                <div class="user-name">Elena Vance</div>
-                <div class="user-email">elenavance@artelio.ai</div>
+        <aside class="artist-style-panel">
+            <h3>AI Style Analysis</h3>
+            <p class="panel-label">Primary Color Palette</p>
+            <div class="palette-row">
+                {% for color in palette %}
+                <span class="palette-dot" style="background-color: {{ color|default:'#2a211b' }};"></span>
+                {% endfor %}
             </div>
+            <p class="panel-label">Common Mood Tags</p>
+            <div class="tag-row">
+                {% for tag in mood_tags %}
+                <span class="tag tag-muted">{{ tag }}</span>
+                {% endfor %}
+            </div>
+            <p class="panel-label">Style Descriptors</p>
+            <ul class="descriptor-list">
+                {% for descriptor in style_descriptors %}
+                <li>{{ descriptor }}</li>
+                {% endfor %}
+            </ul>
+        </aside>
+    </div>
+
+    <div class="artist-gallery">
+        <div class="gallery-header">
+            <h3>Gallery</h3>
         </div>
-        <nav class="sidebar-nav">
-            <a class="sidebar-link" href="{% url 'portfolio' %}">
-                <span class="sidebar-icon">⬛</span>
-                My Portfolio
-            </a>
-            <a class="sidebar-link active" href="{% url 'artist_dashboard' %}">
-                <span class="sidebar-icon">📊</span>
-                Analytics
-            </a>
-            <a class="sidebar-link" href="{% url 'ai_collaboration' %}">
-                <span class="sidebar-icon">🤝</span>
-                Collaborations
-            </a>
-            <a class="sidebar-link" href="{% url 'contact' %}">
-                <span class="sidebar-icon">⚙️</span>
-                Settings
-            </a>
-        </nav>
-        <a class="sidebar-link logout" href="{% url 'logout' %}">
-            <span class="sidebar-icon">↩</span>
-            Log Out
-        </a>
-    </aside>
-
-    <div class="dashboard-main">
-        <header class="dashboard-top">
-            <div>
-                <h2>Dashboard</h2>
-                <p>Welcome back, Elena! Here’s what’s new.</p>
+        <div class="gallery-grid">
+            {% for artwork in artworks %}
+            <div class="gallery-item">
+                <a class="gallery-artist" href="{% url 'artwork_detail' artwork.pk %}">
+                    {{ request.user.get_full_name|default:request.user.username|capfirst }}
+                </a>
+                <a class="gallery-card" href="{% url 'artwork_detail' artwork.pk %}">
+                    <img src="{{ artwork.image.url }}" alt="{{ artwork.title }}">
+                    <div class="gallery-meta">
+                        <h4>{{ artwork.title }}</h4>
+                    </div>
+                </a>
+                <form class="delete-artwork-form" method="post" action="{% url 'delete_artwork' artwork.pk %}" onsubmit="return confirm('Remove this artwork from your dashboard?');">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button class="btn btn-outline btn-small" type="submit">Remove</button>
+                </form>
             </div>
-            <a class="btn btn-primary upload-btn" href="{% url 'upload_artwork' %}">Upload New Art</a>
-        </header>
-
-        <div class="dashboard-grid">
-            <div class="dashboard-panel">
-                <h3>Portfolio Analytics</h3>
-                <div class="analytics-row">
-                    <div class="stat-card">
-                        <span class="stat-label">Total Views</span>
-                        <span class="stat-value">12,845</span>
-                        <span class="stat-delta positive">+12.5%</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-label">Total Likes</span>
-                        <span class="stat-value">3,102</span>
-                        <span class="stat-delta positive">+8.2%</span>
-                    </div>
-                </div>
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <div>
-                            <div class="chart-title">Views and Likes - Last 30 Days</div>
-                            <div class="chart-total">15,947 Total</div>
-                        </div>
-                        <div class="chart-growth">Last 30 Days <span class="positive">+15%</span></div>
-                    </div>
-                    <div class="chart-curve"></div>
-                    <div class="chart-labels">
-                        <span>Week 1</span>
-                        <span>Week 2</span>
-                        <span>Week 3</span>
-                        <span>Week 4</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="dashboard-panel side-panel">
-                <h3>AI Collaboration Suggestions</h3>
-                <div class="collab-card">
-                    <div class="collab-avatar">MR</div>
-                    <div>
-                        <div class="collab-name">Marcus Reid</div>
-                        <div class="collab-role">Digital Painter</div>
-                    </div>
-                    <button class="btn btn-secondary">View Profile</button>
-                </div>
-                <div class="collab-card">
-                    <div class="collab-avatar">CC</div>
-                    <div>
-                        <div class="collab-name">Clara Chen</div>
-                        <div class="collab-role">3D Sculptor</div>
-                    </div>
-                    <button class="btn btn-secondary">View Profile</button>
-                </div>
-            </div>
+            {% empty %}
+            <div class="gallery-empty">No artworks uploaded yet.</div>
+            {% endfor %}
         </div>
     </div>
+
+    {% if past_updated_artworks %}
+    <div class="artist-gallery">
+        <div class="gallery-header">
+            <h3>Past Updated Artworks</h3>
+        </div>
+        <div class="gallery-grid">
+            {% for artwork in past_updated_artworks %}
+            <div class="gallery-item">
+                <a class="gallery-artist" href="{% url 'artwork_detail' artwork.pk %}">
+                    {{ request.user.get_full_name|default:request.user.username|capfirst }}
+                </a>
+                <a class="gallery-card" href="{% url 'artwork_detail' artwork.pk %}">
+                    <img src="{{ artwork.image.url }}" alt="{{ artwork.title }}">
+                    <div class="gallery-meta">
+                        <h4>{{ artwork.title }}</h4>
+                    </div>
+                </a>
+                <form class="delete-artwork-form" method="post" action="{% url 'delete_artwork' artwork.pk %}" onsubmit="return confirm('Remove this older updated artwork?');">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button class="btn btn-outline btn-small" type="submit">Remove</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 </section>
 {% endblock %}

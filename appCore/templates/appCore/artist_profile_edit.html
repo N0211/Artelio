@@ -1,0 +1,40 @@
+{% extends "appCore/layout.html" %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+<section class="ai-page">
+    <h2>Edit Profile</h2>
+    <p class="ai-intro">Update your artist biography and contact details.</p>
+    <form method="post" enctype="multipart/form-data" class="ai-form">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">Email</label>
+            {{ form.email }}
+            {{ form.email.errors }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.phone.id_for_label }}">Phone Number</label>
+            {{ form.phone }}
+            {{ form.phone.errors }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.bio.id_for_label }}">Biography</label>
+            {{ form.bio }}
+            {{ form.bio.errors }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.website.id_for_label }}">Website</label>
+            {{ form.website }}
+            {{ form.website.errors }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.profile_image.id_for_label }}">Profile Image</label>
+            {{ form.profile_image }}
+            {{ form.profile_image.errors }}
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</section>
+{% endblock %}

@@ -4,12 +4,13 @@
 
 {% block content %}
 <h2>Art Portfolio</h2>
-<div class="artwork-grid">
+<div class="art-grid">
     {% for artwork in artworks %}
-    <div class="artwork-item">
-        <img src="{{ artwork.image.url }}" alt="{{ artwork.title }}">
-        <h3><a href="{% url 'artwork_detail' artwork.pk %}">{{ artwork.title }}</a></h3>
-        <p>By: <a href="{% url 'artist_profile' artwork.artist.username %}">{{ artwork.artist.username }}</a></p>
+    <div class="art-card art-image" style="background-image: url('{{ artwork.image.url }}');">
+        <span>{{ artwork.title }}</span>
+        <a class="art-byline" href="{% url 'artist_profile' artwork.artist.username %}">
+            by: {{ artwork.artist.username }}
+        </a>
     </div>
     {% endfor %}
 </div>

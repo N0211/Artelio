@@ -1,3 +1,4 @@
+"""Test suite placeholder for appCore."""
 from django.test import TestCase
 
-# Create your tests here.
+# Add tests as features stabilize.
