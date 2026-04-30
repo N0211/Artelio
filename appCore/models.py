@@ -1,5 +1,14 @@
-"""Database models for artists, profiles, and artworks."""
+"""Database models for artists, profiles, and artworks.
+
+Custom models extending Django's auth system and adding art-related data.
+Source: Original custom implementation based on Django's auth models.
+- CustomUser: Extends django.contrib.auth.models.AbstractUser
+- ArtistProfile: Standard Django Model pattern
+- Artwork: Standard Django Model pattern with ForeignKey
+"""
 from django.db import models
+# Django's AbstractUser provides the base user model with authentication features
+# Source: django.contrib.auth.models.AbstractUser
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 

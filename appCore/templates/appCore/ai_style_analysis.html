@@ -1,0 +1,61 @@
+{% extends "appCore/layout.html" %}
+
+{% block title %}AI Style Analysis{% endblock %}
+
+{% block content %}
+<section class="ai-page">
+    <h2>AI Style Analysis</h2>
+    
+    {% if not username %}
+    <p class="ai-intro">Select an artist to analyze their style based on their artworks.</p>
+
+    <form method="get" class="ai-form" action="{% url 'ai_style_analysis' %}">
+        <div class="form-group">
+            <label for="artist-select">Select artist</label>
+            <select id="artist-select" name="username" required>
+                <option value="">Select an artist</option>
+                {% for artist in artists %}
+                <option value="{{ artist.username }}">{{ artist.username }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Analyze style</button>
+    </form>
+    {% else %}
+    <p class="ai-intro">Style analysis for <strong>{{ username }}</strong></p>
+    <a href="{% url 'ai_style_analysis' %}" class="btn btn-secondary">Analyze another artist</a>
+
+    {% if error %}
+    <div class="ai-error">Error: {{ error }}</div>
+    {% endif %}
+
+    {% if result %}
+    <div class="ai-result">
+        <div class="ai-analysis-card">
+            <h3>Style Analysis</h3>
+            <div class="analysis-item">
+                <strong>Dominant Style:</strong>
+                <p>{{ result.dominant_style }}</p>
+            </div>
+            <div class="analysis-item">
+                <strong>Color Tendencies:</strong>
+                <p>{{ result.color_tendencies }}</p>
+            </div>
+            <div class="analysis-item">
+                <strong>Mood/Theme:</strong>
+                <p>{{ result.mood_theme }}</p>
+            </div>
+            <div class="analysis-item">
+                <strong>Technical Strengths:</strong>
+                <p>{{ result.technical_strengths }}</p>
+            </div>
+            <div class="analysis-item">
+                <strong>Recommendations:</strong>
+                <p>{{ result.recommendations }}</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endif %}
+</section>
+{% endblock %}

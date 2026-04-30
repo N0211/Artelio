@@ -1,5 +1,13 @@
-"""URL routes for the appCore Django app."""
+"""URL routes for the appCore Django app.
+
+Source: Original custom URL configuration.
+Uses Django's built-in auth views.
+"""
+# Django's URL routing system
+# Source: django.urls
 from django.urls import path
+# Django's built-in authentication views (LoginView, LogoutView)
+# Source: django.contrib.auth.views
 from django.contrib.auth import views as auth_views
 from appCore import views
 
@@ -23,11 +31,17 @@ urlpatterns = [
     path('artist/<str:username>/', views.artist_profile, name='artist_profile'),
     path('upload/', views.upload_artwork, name='upload_artwork'),
 
-    # AI features
+# Artists page
+    path('artists/', views.artists_listing, name='artists_listing'),
+    path('api/artists/search/', views.artist_search_api, name='artist_search_api'),
+
+# AI features
     path('ai/', views.ai_dashboard, name='ai_dashboard'),
     path('ai/collaboration/', views.ai_collaboration, name='ai_collaboration'),
     path('ai/compare/', views.ai_compare, name='ai_compare'),
     path('ai/search/', views.ai_candidate_search, name='ai_candidate_search'),
+    path('ai/style/', views.ai_style_analysis, name='ai_style_analysis'),
+    path('ai/style/<str:username>/', views.ai_style_analysis, name='ai_style_analysis'),
     # Artist dashboard
     path('dashboard/', views.artist_dashboard, name='artist_dashboard'),
 ]

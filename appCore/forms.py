@@ -1,5 +1,13 @@
-"""Forms for registration and profile editing."""
+"""Forms for registration and profile editing.
+
+Custom forms extending Django's built-in authentication forms.
+Source: Original custom implementation.
+- UserRegistrationForm: Extends django.contrib.auth.forms.UserCreationForm
+- ArtistProfileForm: Extends django.forms.ModelForm
+"""
 from django import forms
+# Django's UserCreationForm provides built-in password validation and user creation
+# Source: django.contrib.auth.forms.UserCreationForm
 from django.contrib.auth.forms import UserCreationForm
 from .models import ArtistProfile, CustomUser
 
