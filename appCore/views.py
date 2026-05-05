@@ -112,8 +112,8 @@ def artwork_detail(request, pk):
 @login_required
 def artist_profile(request, username):
     """Artist bio + gallery page."""
-    user = CustomUser.objects.get(username=username)
-    profile = ArtistProfile.objects.get(user=user)
+    user = get_object_or_404(CustomUser, username=username)
+    profile, created = ArtistProfile.objects.get_or_create(user=user)
     artworks = list(Artwork.objects.filter(artist=user).order_by('-updated_at', '-created_at'))
     past_updated_artworks = artworks[1:] if artworks else []
     # Demo tags/palette for the prototype UI.
